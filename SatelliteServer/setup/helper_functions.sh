@@ -71,7 +71,7 @@ function ensureServiceisRunning() {
 
 function checkServiceisRunning() {
   if
-    systemctl --type=service --state=active list-units | grep "$1" | grep -q "running"; then
+    systemctl --type=service --state=running list-units | grep -q "$1"; then
     return 0
   else
     return 1
