@@ -12,3 +12,10 @@ echo_blue "Installing Utility packages"
 installPackages openssh-server
 echo_green "Utility packages installed"
 
+echo_blue "Installing database packages"
+installPackages mysql-server
+echo_green "Database packages installed"
+
+echo_blue "Setting up database"
+setupMySQL
+echo_green "Database set up"
