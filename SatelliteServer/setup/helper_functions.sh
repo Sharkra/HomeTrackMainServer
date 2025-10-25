@@ -52,3 +52,28 @@ function installDebPackage(){
     sudo apt install -f
   fi
 }
+
+function ensureServiceisRunning() {
+  if checkServiceisRunning "$1"; then
+    echo_green "$1 service already running"
+    return 0
+  else
+    sudo systemctl start "$1".service
+    if checkServiceisRunning "$1"; then
+      echo_green "$1 service already running"
+      return 0
+    else
+      echo_red "Failed to start service $1"
+      return 1
+    fi
+  fi
+}
+
+function checkServiceisRunning() {
+  if
+    systemctl --type=service --state=active list-units | grep "$1" | grep -q "running"; then
+    return 0
+  else
+    return 1
+  fi
+}
