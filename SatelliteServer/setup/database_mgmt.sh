@@ -5,6 +5,9 @@ user="dbuser"
 password="123" #Could be changed as to be a prompt in the future"
 db_name="HomeTrackDB"
 
+function dbCommand(){
+    mysql -u"$user" -p"$password" -e "$1"
+}
 
 function createDBUser(){
     echo_blue "Creating DB user"
@@ -22,8 +25,65 @@ function createDBUser(){
     fi
 }
 
+function createDBTables(){
+    echo_blue "Creating DB Tables"
+
+    dbCommand "USE ${db_name}; \
+               CREATE TABLE IF NOT EXISTS Satellite(
+               Id int NOT NULL,
+               RoomId int NOT NULL,
+               UpstreamSatelliteId int,
+               HasTemperature bool NOT NULL,
+               HasHumitity bool NOT NULL,
+               HasVOC bool NOT NULL,
+               HasAirParticle bool NOT NULL,
+               HasAmbientLight bool NOT NULL,
+               HasCurrent bool NOT NULL,
+               PRIMARY KEY (Id)
+               );"
+
+    dbCommand "USE ${db_name}; \
+               CREATE TABLE IF NOT EXISTS Room(
+               Id int NOT NULL,
+               Name varchar(255),
+               PRIMARY KEY (Id)
+               );"
+    dbCommand "USE ${db_name}; \
+               CREATE TABLE IF NOT EXISTS PowerCircuit(
+               Id int NOT NULL,
+               Name varchar(255),
+               RoomId int NOT NULL,
+               PRIMARY KEY (Id)
+               );"
+    dbCommand "USE ${db_name}; \
+               CREATE TABLE IF NOT EXISTS CurrentSensor(
+               Id int NOT NULL,
+               PowerCircuitId int NOT NULL,
+               SatelliteId int NOT NULL,
+               PRIMARY KEY (Id)
+               );"
+    dbCommand "USE ${db_name}; \
+               CREATE TABLE IF NOT EXISTS Measurements(
+               Id varchar(36) NOT NULL,
+               SatelliteId int NOT NULL,
+               Datetime int NOT NULL,
+               MeasurementTypeId int NOT NULL,
+               Value float NOT NULL,
+               PRIMARY KEY (Id)
+               );"
+    dbCommand "USE ${db_name}; \
+               CREATE TABLE IF NOT EXISTS MeasurementType(
+               Id int NOT NULL,
+               Name varchar(20),
+               Units varchar(20)
+               PRIMARY KEY (Id)
+               );"
+}
+
 
 function setupMySQL(){
+    echo_blue "Setting up MySQL database"
+
     ensureServiceisRunning mysql
 
     createDBUser
