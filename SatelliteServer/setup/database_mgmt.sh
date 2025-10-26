@@ -77,6 +77,15 @@ function createDBTables(){
                );"
 }
 
+function populateMeasurementTypeTable(){
+    dbCommand "USE ${db_name}; \
+               INSERT INTO MeasurementType VALUES (1,'Ambient Ligh', 'Lux'), \
+                                                  (2,'Humitity', '%'), \
+                                                  (3,'Temperature', '°C'), \
+                                                  (4,'Current', 'A'), \
+                                                  (5,'VOC', 'Lux'), \
+                                                  (6,'Air Particle count', 'μg/m³');"
+}
 
 function setupMySQL(){
     echo_blue "Setting up MySQL database"
@@ -85,5 +94,7 @@ function setupMySQL(){
 
     createDBUser
 
-    createDBSchema
+    createDBTables
+
+    populateMeasurementTypeTable
 }
