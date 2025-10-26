@@ -89,3 +89,5 @@ The database will be a SQL database with the following tables
     - int
 - Rating
     - int
+- SatelliteId
+    - int
