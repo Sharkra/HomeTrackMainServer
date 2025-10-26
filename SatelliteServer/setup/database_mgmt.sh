@@ -27,7 +27,7 @@ function createDBTables(){
 
     dbCommand "USE ${db_name}; \
                CREATE TABLE IF NOT EXISTS Satellite(
-               Id int NOT NULL,
+               Id int NOT NULL AUTO_INCREMENT,
                RoomId int NOT NULL,
                UpstreamSatelliteId int,
                HasTemperature bool NOT NULL,
@@ -41,20 +41,20 @@ function createDBTables(){
 
     dbCommand "USE ${db_name}; \
                CREATE TABLE IF NOT EXISTS Room(
-               Id int NOT NULL,
+               Id int NOT NULL AUTO_INCREMENT,
                Name varchar(255),
                PRIMARY KEY (Id)
                );"
     dbCommand "USE ${db_name}; \
                CREATE TABLE IF NOT EXISTS PowerCircuit(
-               Id int NOT NULL,
+               Id int NOT NULL AUTO_INCREMENT,
                Name varchar(255),
                RoomId int NOT NULL,
                PRIMARY KEY (Id)
                );"
     dbCommand "USE ${db_name}; \
                CREATE TABLE IF NOT EXISTS CurrentSensor(
-               Id int NOT NULL,
+               Id int NOT NULL AUTO_INCREMENT,
                PowerCircuitId int NOT NULL,
                SatelliteId int NOT NULL,
                PRIMARY KEY (Id)
@@ -72,7 +72,7 @@ function createDBTables(){
                CREATE TABLE IF NOT EXISTS MeasurementType(
                Id int NOT NULL,
                Name varchar(20),
-               Units varchar(20)
+               Units varchar(20),
                PRIMARY KEY (Id)
                );"
 }
