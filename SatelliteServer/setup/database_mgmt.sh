@@ -1,13 +1,10 @@
 #!/bin/bash
 source "$( dirname -- "${BASH_SOURCE[0]}" )"/helper_functions.sh
+source "$( dirname -- "${BASH_SOURCE[0]}" )"/db_helper_functions.sh
 
 user="dbuser"
 password="123" #Could be changed as to be a prompt in the future"
 db_name="HomeTrackDB"
-
-function dbCommand(){
-    mysql -u"$user" -p"$password" -e "$1"
-}
 
 function createDBUser(){
     echo_blue "Creating DB user"
