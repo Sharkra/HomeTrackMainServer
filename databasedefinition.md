@@ -15,11 +15,11 @@ The database will be a SQL database with the following tables
 
 ## Satellite table
 - Id
-    - UUDI
+    - int
 - RoomId
-    - UUID
+    - int
 - UpstreamSatelliteId
-    - UUID
+    - int
 - HasTemperature
     - TRUE/FALSE
 - HasHumitity
@@ -35,27 +35,27 @@ The database will be a SQL database with the following tables
 
 ## Room table
 - Id
-    - UUID
+    - int
 - Name
     - string
 
 ## PowerCircuit table
 - Id
-    - UUID
+    - int
 - Name
     - string
 - RoomId
-    - UUID
+    - int
 
 ## Measurements table
 - Id
     - UUID
 - SatelliteId
-    - UUID
+    - int
 - Datetime
     - UnixTimestamp Int
 - MeasurementTypeId
-    - UUID
+    - int
 - Value
     - float
 
@@ -84,8 +84,8 @@ The database will be a SQL database with the following tables
 
 ## CurrentSensor table
 - Id
-    - UUID
+    - int
 - PowerCircuitId
-    - UUID
+    - int
 - Rating
     - int
