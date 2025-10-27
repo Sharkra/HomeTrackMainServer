@@ -19,5 +19,3 @@ echo_green "Database packages installed"
 echo_blue "Setting up database"
 setupMySQL
 echo_green "Database set up"
-
-echo_blue "Setting up web server dependencies
