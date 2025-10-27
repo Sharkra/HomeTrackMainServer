@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Sourcing auxiliary methods
-source "$( dirname -- "${BASH_SOURCE[0]}" )"/helper_functions.sh
+source "$( dirname -- "${BASH_SOURCE[0]}" )"/../../common/bash/helper_functions.sh
 source "$( dirname -- "${BASH_SOURCE[0]}" )"/database_mgmt.sh
 
 # Start with a fresh Ubuntu install

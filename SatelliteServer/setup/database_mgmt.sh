@@ -1,5 +1,5 @@
 #!/bin/bash
-source "$( dirname -- "${BASH_SOURCE[0]}" )"/helper_functions.sh
+source "$( dirname -- "${BASH_SOURCE[0]}" )"/../../common/bash/helper_functions.sh
 source "$( dirname -- "${BASH_SOURCE[0]}" )"/db_helper_functions.sh
 
 user="dbuser"
