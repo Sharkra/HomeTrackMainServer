@@ -22,7 +22,7 @@ The database will be a SQL database with the following tables
     - int
 - HasTemperature
     - TRUE/FALSE
-- HasHumitity
+- HasHumidity
     - TRUE/FALSE
 - HasVOC
     - TRUE/FALSE
@@ -69,7 +69,7 @@ The database will be a SQL database with the following tables
     - 6
 - Name
     - "Ambient Light"
-    - "Humitity"
+    - "Humidity"
     - "Temperature"
     - "Current"
     - "VOC" [TODO: Needs further investigation]
