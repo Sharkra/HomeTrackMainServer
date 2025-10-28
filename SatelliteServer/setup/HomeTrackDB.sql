@@ -106,6 +106,7 @@ DROP TABLE IF EXISTS `Satellite`;
 CREATE TABLE `Satellite` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `RoomId` int NOT NULL,
+  `BatteryLevel` int DEFAULT NULL,
   `UpstreamSatelliteId` int DEFAULT NULL,
   `HasTemperature` tinyint(1) NOT NULL,
   `HasHumidity` tinyint(1) NOT NULL,
