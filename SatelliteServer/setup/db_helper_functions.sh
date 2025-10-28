@@ -9,6 +9,14 @@ function listDBTables(){
                SHOW TABLES;"
 }
 
+function listDBs(){
+    dbCommand "SHOW DATABASES;"
+}
+
+function dropDB(){
+    dbCommand "DROP DATABASE $1;"
+}
+
 function showDataInTable(){
     dbCommand "USE ${db_name}; \
                SELECT * FROM ${1};"
