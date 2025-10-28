@@ -12,6 +12,14 @@ function checkPackagesInstalled() {
   fi
 }
 
+function addRepo(){
+  if checkRepoExists "${1}"; then
+    echo_green "Package(s) Installed"
+  else
+    sudo add-apt-repository "${1}"
+  fi
+}
+
 function checkRepoExists() {
   if ls /etc/apt/sources.list.d | grep -q ".*${1}.*"; then
     return 0
