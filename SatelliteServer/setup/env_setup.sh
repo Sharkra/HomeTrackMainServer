@@ -8,6 +8,8 @@ source "$( dirname -- "${BASH_SOURCE[0]}" )"/database_mgmt.sh
 
 echo_blue "Starting environment setup"
 
+sudo apt update
+
 echo_blue "Installing Utility packages"
 installPackages openssh-server
 echo_green "Utility packages installed"
