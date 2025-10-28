@@ -65,4 +65,3 @@ function installDevTools(){
         return 1
     }
 }
-#pytest & pyest-cov
