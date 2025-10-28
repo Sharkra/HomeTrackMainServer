@@ -18,3 +18,9 @@ else
     echo_red "WebDev dependencies installation failed"
 fi
 
+echo_blue "Installing Development tools"
+if installDevTools; then
+    echo_green "Development tools installed"
+else
+    echo_red "Development tools installation failed"
+fi

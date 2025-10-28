@@ -56,3 +56,13 @@ function setupWebDevDependencies(){
     }
 }
 
+function installDevTools(){
+    {
+        pip3.13 install flask-debugtoolbar && \
+        pip3.13 install pytest pytest-cov && \
+        return 0
+    } || {
+        return 1
+    }
+}
+#pytest & pyest-cov
