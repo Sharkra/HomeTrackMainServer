@@ -5,6 +5,7 @@ source "$( dirname -- "${BASH_SOURCE[0]}" )"/db_helper_functions.sh
 user="dbuser"
 password="123" #Could be changed as to be a prompt in the future"
 db_name="HomeTrackDB"
+db_import_file="$( dirname -- "${BASH_SOURCE[0]}" )"/HomeTrackDB.sql
 
 function createDBUser(){
     echo_blue "Creating DB user"
@@ -22,6 +23,9 @@ function createDBUser(){
     fi
 }
 
+function importDB(){
+    mysql -u"$user" -p"$password" "$db_name" < "$db_import_file"
+}
 function createDBTables(){
     echo_blue "Creating DB Tables"
 
@@ -94,7 +98,5 @@ function setupMySQL(){
 
     createDBUser
 
-    createDBTables
-
-    populateMeasurementTypeTable
+    importDB
 }
