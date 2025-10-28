@@ -16,7 +16,7 @@ function addRepo(){
   if checkRepoExists "${1}"; then
     echo_green "Package(s) Installed"
   else
-    sudo add-apt-repository "${1}"
+    sudo add-apt-repository "${1}" -y
   fi
 }
 
