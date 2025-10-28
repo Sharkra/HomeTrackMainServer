@@ -43,3 +43,16 @@ function setupPythonEnv(){
     fi
     return 0
 }
+
+function setupWebDevDependencies(){
+    {
+        installPackages python3-pip && \
+        pip install --upgrade pip && \
+        pip3.13 install Flask Flask-SQLAlchemy && \
+        return 0
+    } ||
+    {
+        return 1
+    }
+}
+
