@@ -31,7 +31,7 @@ function createDBTables(){
                RoomId int NOT NULL,
                UpstreamSatelliteId int,
                HasTemperature bool NOT NULL,
-               HasHumitity bool NOT NULL,
+               HasHumidity bool NOT NULL,
                HasVOC bool NOT NULL,
                HasAirParticle bool NOT NULL,
                HasAmbientLight bool NOT NULL,
@@ -79,8 +79,8 @@ function createDBTables(){
 
 function populateMeasurementTypeTable(){
     dbCommand "USE ${db_name}; \
-               INSERT INTO MeasurementType VALUES (1,'Ambient Ligh', 'Lux'), \
-                                                  (2,'Humitity', '%'), \
+               INSERT INTO MeasurementType VALUES (1,'Ambient Light', 'Lux'), \
+                                                  (2,'Humidity', '%'), \
                                                   (3,'Temperature', '°C'), \
                                                   (4,'Current', 'A'), \
                                                   (5,'VOC', 'Lux'), \
@@ -90,7 +90,7 @@ function populateMeasurementTypeTable(){
 function setupMySQL(){
     echo_blue "Setting up MySQL database"
 
-    ensureServiceisRunning mysql
+    ensureServiceIsRunning mysql
 
     createDBUser
 

@@ -53,13 +53,13 @@ function installDebPackage(){
   fi
 }
 
-function ensureServiceisRunning() {
-  if checkServiceisRunning "$1"; then
+function ensureServiceIsRunning() {
+  if checkServiceIsRunning "$1"; then
     echo_green "$1 service already running"
     return 0
   else
     sudo systemctl start "$1".service
-    if checkServiceisRunning "$1"; then
+    if checkServiceIsRunning "$1"; then
       echo_green "$1 service already running"
       return 0
     else
@@ -69,7 +69,7 @@ function ensureServiceisRunning() {
   fi
 }
 
-function checkServiceisRunning() {
+function checkServiceIsRunning() {
   if
     systemctl --type=service --state=running list-units | grep -q "$1"; then
     return 0
