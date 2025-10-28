@@ -4,6 +4,8 @@
 source "$( dirname -- "${BASH_SOURCE[0]}" )"/../../common/bash/helper_functions.sh
 source "$( dirname -- "${BASH_SOURCE[0]}" )"/database_mgmt.sh
 
+set -e
+
 # Start with a fresh Ubuntu install
 
 echo_blue "Starting environment setup"
