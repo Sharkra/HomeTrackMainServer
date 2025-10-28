@@ -5,7 +5,7 @@ source "$( dirname -- "${BASH_SOURCE[0]}" )"/../../common/bash/helper_functions.
 function setupVirtualEnv(){
     {
         installPackages python3.13-venv
-        python -m venv ~/Dependencies/.webservervenv && \
+        python3.13 -m venv ~/Dependencies/.webservervenv && \
         source ~/Dependencies/.webservervenv/bin/activate && \
         return 0
     } || {
@@ -33,7 +33,6 @@ function setupPythonEnv(){
         echo_red "Python setup failed"
         return 1
     fi
-    return 0
     
     if setupVirtualEnv; then
         echo_green "Virtual env setup"
