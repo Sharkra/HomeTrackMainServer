@@ -64,3 +64,13 @@ function installDevTools(){
         return 1
     }
 }
+
+function installProjectExternalPackages(){
+    ( 
+        cd /tmp && \
+        wget https://registry.npmjs.org/chart.js/-/chart.js-4.5.1.tgz && \
+        mkdir -p ~/Programming/HomeTrackWebServer/application/external_packages && \
+        cd ~/Programming/HomeTrackWebServer/application/external_packages && \
+        tar -xf /tmp/chart.js-4.5.1.tgz
+    )
+}
