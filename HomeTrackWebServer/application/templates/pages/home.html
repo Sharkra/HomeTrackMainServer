@@ -7,16 +7,16 @@
 
 {% block content %}
   <p>
-    <canvas id="TestChart" width="900" height="400"></canvas>
-    <script>
-      var ctx = document.getElementById("TestChart").getContext("2d");
+    <canvas id="chart1_canvas" width="900" height="400"></canvas>
+    <script id="chart1">
+      var ctx = document.getElementById("chart1_canvas").getContext("2d");
       var testChart = new Chart(ctx, {
         type: "line",
         data: {
           labels: {{ labels | safe }},
           datasets: [
             {
-              label: "Test data",
+              label: "Power",
               data: {{ values | safe }},
               fill: false,
               borderColor: "rgb(75,192,192)",
