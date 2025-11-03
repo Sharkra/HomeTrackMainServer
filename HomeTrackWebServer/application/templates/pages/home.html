@@ -1,35 +1,33 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h2>{% block title %}Home{% endblock title %}</h2>
-  <script src="{{ url_for('static', filename='external_packages/package/dist/chart.umd.min.js') }}"></script>
+  <script type=module src="{{ url_for('static', filename='scripts/linechartwithbuttons.js') }}"></script>
 {% endblock header %}
 
 {% block content %}
-  <p>
-    <canvas id="chart1_canvas" width="900" height="400"></canvas>
-    <script id="chart1">
-      var ctx = document.getElementById("chart1_canvas").getContext("2d");
-      var testChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: {{ labels | safe }},
-          datasets: [
-            {
-              label: "Power",
-              data: {{ values | safe }},
-              fill: false,
-              borderColor: "rgb(75,192,192)",
-              lineTension: 0.1
-            }
-          ]
-        },
-        options: {
-          responsive: false
-        }
-      });
-    </script>
-  </p>
+<body>
+  <div class="chart-container">
+    <!-- Chart 1 -->
+    <div class="chart-box">
+      <canvas id="chart1"></canvas>
+      <div class="button-group">
+        <button id="toggle1a">Power Consumption</button>
+        <button id="toggle1b">Temperature</button>
+      </div>
+    </div>
+
+    <!-- Chart 2 -->
+    <div class="chart-box">
+      <canvas id="chart2"></canvas>
+      <div class="button-group">
+        <button id="toggle2a">Toggle Visitors</button>
+        <button id="toggle2b">Toggle Signups</button>
+      </div>
+    </div>
+  </div>
+
+  <script type=module src="{{ url_for('static', filename='scripts/linechartwithbuttons.js') }}">
+  </script>
   <p>
     Learn more about this project by visiting the <a href="{{ url_for('pages.settings') }}">About page</a>.
   </p>
