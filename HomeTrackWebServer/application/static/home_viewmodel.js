@@ -1,6 +1,6 @@
-import * as ChartJS from "../external_packages/package/dist/chart.umd.js"
+import * as ChartJS from "./external_packages/package/dist/chart.umd.js"
 
-export function createLineChart(ctxId, datasets, buttonIds, options = {}) {
+function createLineChart(ctxId, datasets, buttonIds, options = {}) {
   const ctx = document.getElementById(ctxId).getContext('2d');
   const chart = new Chart(ctx, {
     type: 'line',

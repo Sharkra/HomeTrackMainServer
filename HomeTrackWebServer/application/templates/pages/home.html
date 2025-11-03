@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <script type=module src="{{ url_for('static', filename='scripts/linechartwithbuttons.js') }}"></script>
+  <script type=module
+          src="{{ url_for('static', filename='home_viewmodel.js') }}"
+          defer>
+  </script>
 {% endblock header %}
 
 {% block content %}
@@ -25,9 +28,6 @@
       </div>
     </div>
   </div>
-
-  <script type=module src="{{ url_for('static', filename='scripts/linechartwithbuttons.js') }}">
-  </script>
   <p>
     Learn more about this project by visiting the <a href="{{ url_for('pages.settings') }}">About page</a>.
   </p>
