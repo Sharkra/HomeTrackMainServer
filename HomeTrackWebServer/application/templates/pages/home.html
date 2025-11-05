@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block header %}
+  <script src="{{ url_for('static', filename='external_packages/chart.js/package/dist/chart.umd.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='external_packages/socket.io-socket.io-4.8.1/packages/socket.io/client-dist/socket.io.min.js') }}"></script>
   <script type=module
           src="{{ url_for('static', filename='home_viewmodel.js') }}"
           defer>

@@ -59,6 +59,7 @@ function installDevTools(){
     {
         pip3.13 install flask-debugtoolbar && \
         pip3.13 install pytest pytest-cov && \
+        pip3.13 install flask-socketio gevent && \
         return 0
     } || {
         return 1
@@ -69,8 +70,13 @@ function installProjectExternalPackages(){
     ( 
         cd /tmp && \
         wget https://registry.npmjs.org/chart.js/-/chart.js-4.5.1.tgz && \
+        wget https://github.com/socketio/socket.io/archive/refs/tags/socket.io@4.8.1.tar.gz && \
         mkdir -p ~/Programming/HomeTrackWebServer/application/external_packages && \
-        cd ~/Programming/HomeTrackWebServer/application/external_packages && \
-        tar -xf /tmp/chart.js-4.5.1.tgz
+        mkdir -p ~/Programming/HomeTrackWebServer/application/external_packages/chart.js
+        cd ~/Programming/HomeTrackWebServer/application/external_packages/chart.js && \
+        tar -xf /tmp/chart.js-4.5.1.tgz && \
+        cd .. && \
+        tar -xf /tmp/socket.io-socket.io-4.8.1.tar.gz
+        
     )
 }
