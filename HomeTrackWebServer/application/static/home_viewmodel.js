@@ -1,85 +1,69 @@
-import * as ChartJS from "./external_packages/package/dist/chart.umd.js"
+// Set the default tension of charts.
+// If not the one desired for a specific chart, change it on the dataset
+Chart.defaults.elements.line.tension= 0.2
 
-function createLineChart(ctxId, datasets, buttonIds, options = {}) {
-  const ctx = document.getElementById(ctxId).getContext('2d');
-  const chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: options.labels || [],
-      datasets,
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { labels: { color: '#333' } },
-      },
-      scales: {
-        x: { ticks: { color: '#333' } },
-        y: { beginAtZero: true, ticks: { color: '#333' } },
-      },
-    },
-  });
+const ChartViewModel = {
+  charts: {},
 
-  // Attach toggle handlers
-  buttonIds.forEach((btnId, index) => {
-    const btn = document.getElementById(btnId);
-    btn.addEventListener('click', () => {
-      const ds = chart.data.datasets[index];
-      ds.hidden = !ds.hidden;
-      btn.classList.toggle('hidden', ds.hidden);
-      chart.update();
+  async initCharts() {
+    const response = await fetch('/api/all-current-data');
+    const current_data = await response.json();
+
+    console.log(current_data)
+
+    power_data={
+      type: 'line',
+      data: current_data,
+      options: {
+        responsive: true
+      }
+    }
+
+    const ctx1 = document.getElementById('power_chart').getContext('2d');
+    this.charts.power_chart = new Chart(ctx1, power_data);
+    ChartView.renderChartControls('power_chart', this.charts.power_chart);
+    
+    const ctx2 = document.getElementById('chart2').getContext('2d');
+    this.charts.chart2 = new Chart(ctx2, power_data);
+    ChartView.renderChartControls('chart2', this.charts.power_chart);
+  },
+
+  toggleDataset(chartKey, datasetIndex) {
+    const chart = this.charts[chartKey];
+    const meta = chart.getDatasetMeta(datasetIndex);
+    meta.hidden = meta.hidden === null ? !chart.data.datasets[datasetIndex].hidden : null;
+    chart.update();
+  },
+
+  addDataset(chartKey, newDataset) {
+    const chart = this.charts[chartKey];
+    chart.data.datasets.push(newDataset);
+    chart.update();
+    ChartView.renderChartControls(chartKey, chart);
+  },
+
+  removeDataset(chartKey, datasetIndex) {
+    const chart = this.charts[chartKey];
+    chart.data.datasets.splice(datasetIndex, 1);
+    chart.update();
+    ChartView.renderChartControls(chartKey, chart);
+  }
+};
+
+const ChartView = {
+  renderChartControls(chartKey, chartInstance) {
+    const container = document.getElementById(`${chartKey}_controls`);
+    container.innerHTML = '';
+
+    chartInstance.data.datasets.forEach((dataset, index) => {
+      const button = document.createElement('button');
+      button.textContent = `Toggle ${dataset.label}`;
+      button.onclick = () => ChartViewModel.toggleDataset(chartKey, index);
+      container.appendChild(button);
     });
-  });
+  }
+};
 
-  return chart;
-}
-// ===== Chart 1 =====
-createLineChart(
-  'chart1',
-  [
-    {
-      label: 'Sales ($)',
-      data: [120, 150, 180, 220, 170, 200, 250],
-      borderColor: '#2563eb',
-      backgroundColor: 'rgba(37,99,235,0.2)',
-      tension: 0.3,
-      fill: true,
-    },
-    {
-      label: 'Revenue ($)',
-      data: [80, 130, 160, 210, 150, 190, 230],
-      borderColor: '#16a34a',
-      backgroundColor: 'rgba(22,163,74,0.2)',
-      tension: 0.3,
-      fill: true,
-    },
-  ],
-  ['toggle1a', 'toggle1b'],
-  { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'] }
-);
-
-// ===== Chart 2 =====
-createLineChart(
-  'chart2',
-  [
-    {
-      label: 'Visitors',
-      data: [300, 400, 350, 500, 450, 600, 550],
-      borderColor: '#dc2626',
-      backgroundColor: 'rgba(220,38,38,0.2)',
-      tension: 0.3,
-      fill: true,
-    },
-    {
-      label: 'Signups',
-      data: [50, 60, 55, 80, 70, 90, 85],
-      borderColor: '#9333ea',
-      backgroundColor: 'rgba(147,51,234,0.2)',
-      tension: 0.3,
-      fill: true,
-    },
-  ],
-  ['toggle2a', 'toggle2b'],
-  { labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] }
-  );
+window.addEventListener('DOMContentLoaded', () => {
+  ChartViewModel.initCharts();
+});

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify
 from application.models.settings_model import getChartSettings
-from application.models.power_data_model import PowerData
+from application.models.measurements_model import MeasurementData, SensorType
 
 bp = Blueprint("pages", __name__)
 
@@ -16,6 +16,6 @@ def settings():
 def chart_configs():
     return jsonify(getChartSettings())
 
-@bp.route('/api/all_power-data')
-def all_power_data():
-    return jsonify(PowerData.getAllPowerData())
+@bp.route('/api/all-current-data')
+def all_current_data():
+    return jsonify(MeasurementData(SensorType.Current).getData())

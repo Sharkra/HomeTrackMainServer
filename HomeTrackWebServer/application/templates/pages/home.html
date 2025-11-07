@@ -1,34 +1,27 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <script type=module
-          src="{{ url_for('static', filename='home_viewmodel.js') }}"
-          defer>
-  </script>
+<script src="{{ url_for('static', filename='external_packages/chart.js/package/dist/chart.umd.js') }}"></script>
+<script src="{{ url_for('static', filename='home_viewmodel.js') }}" defer></script>
+<script src="{{ url_for('static', filename='home_view.js') }}" defer></script>
 {% endblock header %}
 
 {% block content %}
 <body>
   <div class="chart-container">
-    <!-- Chart 1 -->
-    <div class="chart-box">
-      <canvas id="chart1"></canvas>
-      <div class="button-group">
-        <button id="toggle1a">Power Consumption</button>
-        <button id="toggle1b">Temperature</button>
-      </div>
+    <div class="chart-box" width=900 height=400>
+      <h2>Electrical Power Usage</h2>
+      <canvas id="power_chart"></canvas>
+      <div id="power_chart_controls" class="button-group"></div>
     </div>
-
-    <!-- Chart 2 -->
-    <div class="chart-box">
+    <div class="chart-box" width=900 height=400>
+      <h2>Chart 2</h2>
       <canvas id="chart2"></canvas>
-      <div class="button-group">
-        <button id="toggle2a">Toggle Visitors</button>
-        <button id="toggle2b">Toggle Signups</button>
-      </div>
+      <div id="controls2" class="button-group"></div>
     </div>
   </div>
   <p>
     Learn more about this project by visiting the <a href="{{ url_for('pages.settings') }}">About page</a>.
   </p>
+</body>
 {% endblock content %}
