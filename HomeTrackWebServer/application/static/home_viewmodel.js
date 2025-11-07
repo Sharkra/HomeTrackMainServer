@@ -6,20 +6,22 @@ Chart.defaults.elements.line.responsive=true
 const ChartViewModel = {
   charts: {},
 
-  async initCharts() {
+  async getPowerData() {
     const response = await fetch('/api/all-current-data');
     const current_data = await response.json();
+    return current_data
+  },
 
+  async initCharts() {
+
+    current_data = await this.getPowerData()
     console.log(current_data)
 
     power_data={
       type: 'line',
-      data: current_data,
-      options: {
-        responsive: true
-      }
+      data: current_data
     }
-
+    
     const ctx1 = document.getElementById('power_chart').getContext('2d');
     this.charts.power_chart = new Chart(ctx1, power_data);
     ChartView.renderChartControls('power_chart', this.charts.power_chart);
