@@ -1,6 +1,6 @@
 from enum import Enum
 from flask import current_app as app
-from sqlalchemy import select
+from sqlalchemy import String, select
 from sqlalchemy.orm import Mapped, mapped_column,Session
 from application.database import Base, engine
 
@@ -11,6 +11,22 @@ class SensorType(Enum):
     Current = 4
     VOC = 5
     Air_Particles = 6
+
+class MeasurementType(Base):
+    __tablename__ = 'MeasurementType'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    Name: Mapped[str] = mapped_column(String(20))
+    Units: Mapped[str] = mapped_column(String(20))
+
+    def __repr__(self):
+        return f'<Id {self.id!r}>  <Name {self.Name!r}> <Units {self.Units!r}>'
+
+    def __init__(self, id):
+        self.id = id
+        with Session(engine) as session:
+            row = session.scalars(select(MeasurementType).filter_by(id=id)).first()
+            self.Name = row.Name
+            self.Units = row.Units
 
 class MeasurementData(Base):
     __tablename__ = 'Measurements'
@@ -30,7 +46,6 @@ class MeasurementData(Base):
         app.logger.info("Loading Power Data from DB")
         with Session(engine) as session:
             result = session.execute(select(MeasurementData).filter_by(MeasurementTypeId=self.MeasurementTypeId))
-            print(result.all())
         return result
 
     def getData(self):
@@ -44,6 +59,3 @@ class MeasurementData(Base):
                 {"label": "Revenue", "data": [80, 130, 160, 210, 150, 190, 230], "borderColor": '#16a34a'}
             ]
         }
-
-    def getChartData():
-        pass
