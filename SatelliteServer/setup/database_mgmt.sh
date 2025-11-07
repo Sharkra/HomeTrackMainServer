@@ -5,6 +5,7 @@ source "$( dirname -- "${BASH_SOURCE[0]}" )"/db_helper_functions.sh
 user="dbuser"
 password="123" #Could be changed as to be a prompt in the future"
 db_name="HomeTrackDB"
+test_db_name="TestHomeTrackDB"
 db_import_file="$( dirname -- "${BASH_SOURCE[0]}" )"/HomeTrackDB.sql
 
 function createDBUser(){
@@ -19,6 +20,7 @@ function createDBUser(){
         sudo mysql -e "CREATE DATABASE IF NOT EXISTS ${db_name} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
         sudo mysql -e "CREATE USER IF NOT EXISTS ${user}@localhost IDENTIFIED BY '${password}';"
         sudo mysql -e "GRANT ALL PRIVILEGES ON ${db_name}.* TO '${user}'@'localhost';"
+        sudo mysql -e "GRANT ALL PRIVILEGES ON ${test_db_name}.* TO '${user}'@'localhost';"
         sudo mysql -e "FLUSH PRIVILEGES;"
     fi
 }
