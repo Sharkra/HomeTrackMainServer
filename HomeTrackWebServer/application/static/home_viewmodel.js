@@ -1,6 +1,7 @@
-// Set the default tension of charts.
+// Set the default options of charts.
 // If not the one desired for a specific chart, change it on the dataset
 Chart.defaults.elements.line.tension= 0.2
+Chart.defaults.elements.line.responsive=true
 
 const ChartViewModel = {
   charts: {},
