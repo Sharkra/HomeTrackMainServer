@@ -19,7 +19,7 @@ class MeasurementType(Base):
     Units: Mapped[str] = mapped_column(String(20))
 
     def __repr__(self):
-        return f'<Id {self.id!r}>  <Name {self.Name!r}> <Units {self.Units!r}>'
+        return {"id": self.id, "Name": self.Name, "Units": self.Units}
 
     def __init__(self, id):
         self.id = id
@@ -41,29 +41,34 @@ class MeasurementData(Base):
 
     def __repr__(self):
         return f'<Id {self.id!r}> <SatelliteId {self.SatelliteId!r}> <Datetime {self.Datetime!r}> <Value {self.Value!r}>'
+    
+    def selfDict(self):
+        return {"Datetime": self.Datetime, "SatelliteId": self.SatelliteId, "Value": self.Value}
 
     def loadPowerFromDB(self):
         app.logger.info(f"Loading Measurement Data from DB for type: {self.MeasurementTypeId}")
         result=[]
         with Session(engine) as session:
             conn = session.execute(select(MeasurementData)
-                                     .where(MeasurementData.MeasurementTypeId==self.MeasurementTypeId))
-            for row in conn:
+                                  .where(MeasurementData.MeasurementTypeId==self.MeasurementTypeId)
+                                  .order_by(MeasurementData.Datetime))
+            for row in conn.scalars():
+
                 result.append(row)
         return result
     
     def parsePowerFromDB(self, data):
         app.logger.info("Parsing Power Data from Model")
-        parsed_data={}
+        parsed_data=[]
         for row in data:
-            app.logger.info(row)
-        
+            parsed_data.append(row.selfDict())  
         return parsed_data
 
     def getData(self):
         app.logger.info("Retrieving Power Data from Model")
         db_data = self.loadPowerFromDB()
         data=self.parsePowerFromDB(db_data)
+
         return {
             "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
             "datasets": [
