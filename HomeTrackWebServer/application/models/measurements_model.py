@@ -1,6 +1,6 @@
 from enum import Enum
 from flask import current_app as app
-from sqlalchemy import String, select
+from sqlalchemy import String, Integer, Float, select
 from sqlalchemy.orm import Mapped, mapped_column,Session
 from application.database import Base, engine
 
@@ -31,10 +31,10 @@ class MeasurementType(Base):
 class MeasurementData(Base):
     __tablename__ = 'Measurements'
     id: Mapped[int] = mapped_column(primary_key=True)
-    SatelliteId: Mapped[int] = mapped_column
-    Datetime: Mapped[int] = mapped_column
-    MeasurementTypeId: Mapped[int] = mapped_column
-    Value: Mapped[float]= mapped_column
+    SatelliteId: Mapped[int] = mapped_column(Integer)
+    Datetime: Mapped[int] = mapped_column(Integer)
+    MeasurementTypeId: Mapped[int] = mapped_column(Integer)
+    Value: Mapped[float]= mapped_column(Float)
 
     def __init__(self, MeasurementTypeId=None):
         self.MeasurementTypeId = MeasurementTypeId.value
@@ -43,17 +43,27 @@ class MeasurementData(Base):
         return f'<Id {self.id!r}> <SatelliteId {self.SatelliteId!r}> <Datetime {self.Datetime!r}> <Value {self.Value!r}>'
 
     def loadPowerFromDB(self):
-        app.logger.info("Loading Power Data from DB")
+        app.logger.info(f"Loading Measurement Data from DB for type: {self.MeasurementTypeId}")
+        result=[]
         with Session(engine) as session:
-            result = session.execute(select(MeasurementData)
-                                     .filter_by(MeasurementTypeId=self.MeasurementTypeId)
-                                     .order_by(MeasurementData.Datetime))
+            conn = session.execute(select(MeasurementData)
+                                     .where(MeasurementData.MeasurementTypeId==self.MeasurementTypeId))
+            for row in conn:
+                result.append(row)
         return result
+    
+    def parsePowerFromDB(self, data):
+        app.logger.info("Parsing Power Data from Model")
+        parsed_data={}
+        for row in data:
+            app.logger.info(row)
+        
+        return parsed_data
 
     def getData(self):
         app.logger.info("Retrieving Power Data from Model")
-        app.logger.info(self.MeasurementTypeId)
-        data = self.loadPowerFromDB()
+        db_data = self.loadPowerFromDB()
+        data=self.parsePowerFromDB(db_data)
         return {
             "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
             "datasets": [
