@@ -45,7 +45,9 @@ class MeasurementData(Base):
     def loadPowerFromDB(self):
         app.logger.info("Loading Power Data from DB")
         with Session(engine) as session:
-            result = session.execute(select(MeasurementData).filter_by(MeasurementTypeId=self.MeasurementTypeId))
+            result = session.execute(select(MeasurementData)
+                                     .filter_by(MeasurementTypeId=self.MeasurementTypeId)
+                                     .order_by(MeasurementData.Datetime))
         return result
 
     def getData(self):
